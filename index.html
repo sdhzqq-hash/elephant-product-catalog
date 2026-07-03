@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="site_title">Mini Elephant Heavy Machinery — Product Catalog</title>
+<style>
+:root {
+  --bg: #f8f8f5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #ffffff;
+  --border: #e5e5dc;
+  --gold: #c49530;
+  --gold-bright: #d4a853;
+  --ivory: #5a4a30;
+  --text: #2a2a35;
+  --text-dim: #888888;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 30px rgba(0,0,0,0.1);
+  --accent-glow: rgba(196,149,48,0.08);
+  --accent-glow-strong: rgba(196,149,48,0.2);
+  --cyan: #008877;
+  --blue: #3a7ed8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Particles Background */
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.header {
+  padding: 60px 0 20px;
+  text-align: center;
+  position: relative;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 200px;
+  background: radial-gradient(ellipse, rgba(196,149,48,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.logo-img {
+  height: 180px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+.header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+
+.header .subtitle {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-top: 6px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Category Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 36px 0 32px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 12px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.tab-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(196,149,48,0.08), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tab-btn:hover {
+  border-color: var(--gold);
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.tab-btn:hover::before { opacity: 1; }
+
+.tab-btn.active {
+  background: linear-gradient(135deg, rgba(196,149,48,0.12), rgba(212,168,83,0.03));
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 16px rgba(196,149,48,0.1), inset 0 1px 0 rgba(196,149,48,0.2);
+}
+
+.tab-btn .count {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin-left: 4px;
+}
+
+.tab-btn.active .count { opacity: 0.8; }
+
+/* Product Grid */
+.products {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+  padding-bottom: 60px;
+}
+
+.products.active { display: grid; }
+
+/* Product Card */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-bright), var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-header {
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-header .model-tag {
+  display: inline-block;
+  background: rgba(196,149,48,0.08);
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(196,149,48,0.2);
+}
+
+.card-header h3 {
+  font-size: 1.35rem;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.card-img {
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  padding: 16px;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .card-img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 16px 28px 24px;
+}
+
+/* Spec Table */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.spec-table tr {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: background 0.2s;
+}
+
+.spec-table tr:hover {
+  background: rgba(196,149,48,0.04);
+}
+
+.spec-table tr:last-child { border-bottom: none; }
+
+.spec-table td {
+  padding: 8px 0;
+  font-size: 0.85rem;
+  vertical-align: top;
+}
+
+.spec-table td:first-child {
+  color: var(--text-dim);
+  width: 45%;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.spec-table td:last-child {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Features Tags */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 28px 20px;
+}
+
+.feature-tag {
+  background: rgba(0,0,0,0.03);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.card:hover .feature-tag {
+  border-color: rgba(196,149,48,0.25);
+  color: var(--text);
+}
+
+/* Glow orbs decoration */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.06;
+}
+
+.glow-orb-1 {
+  width: 400px; height: 400px;
+  background: var(--gold);
+  top: -100px; right: -100px;
+  animation: float1 20s ease-in-out infinite;
+}
+
+.glow-orb-2 {
+  width: 300px; height: 300px;
+  background: var(--cyan);
+  bottom: -80px; left: -80px;
+  animation: float2 25s ease-in-out infinite;
+}
+
+.glow-orb-3 {
+  width: 250px; height: 250px;
+  background: var(--blue);
+  top: 40%; right: 20%;
+  animation: float3 18s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -40px) scale(1.2); }
+  66% { transform: translate(-30px, 60px) scale(0.9); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, -50px) scale(1.3); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, 30px) scale(1.15); }
+  66% { transform: translate(40px, -20px) scale(0.85); }
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover { color: var(--gold-bright); }
+
+.footer p {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+.card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.4s; }
+.card:nth-child(9) { animation-delay: 0.45s; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.6rem; }
+  .products { grid-template-columns: 1fr; }
+  .card { margin: 0; }
+  .tab-btn { padding: 10px 20px; font-size: 0.85rem; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* Language Switcher */
+.lang-switcher {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  gap: 4px;
+  direction: ltr;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: var(--shadow);
+  width: 258px;
+  justify-content: center;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 8px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-width: 44px;
+  text-align: center;
+  flex: 1;
+}
+
+.lang-btn:hover {
+  background: rgba(196,149,48,0.08);
+  color: var(--text);
+}
+
+.lang-btn.active {
+  background: rgba(196,149,48,0.15);
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* RTL support */
+/* lang-switcher stays right-aligned for all languages */
+
+[dir="rtl"] .card-header,
+[dir="rtl"] .card-body,
+[dir="rtl"] .features {
+  text-align: right;
+}
+
+[dir="rtl"] .spec-table td:first-child {
+  text-align: right;
+}
+
+[dir="rtl"] .spec-table td:last-child {
+  text-align: right;
+}
+
+[dir="rtl"] .tabs {
+  flex-direction: row;
+}
+
+[dir="rtl"] .header .subtitle {
+  letter-spacing: 0;
+}
+
+</style>
+</head>
+<body>
+
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+<div class="glow-orb glow-orb-3"></div>
+
+<canvas id="particles"></canvas>
+
+
+<!-- Language Switcher -->
+<div class="lang-switcher" id="langSwitcher">
+  <button class="lang-btn" data-lang="en" onclick="i18nSwitch('en')" title="English">EN</button>
+  <button class="lang-btn" data-lang="ru" onclick="i18nSwitch('ru')" title="Русский">RU</button>
+  <button class="lang-btn" data-lang="ko" onclick="i18nSwitch('ko')" title="한국어">KO</button>
+  <button class="lang-btn" data-lang="ja" onclick="i18nSwitch('ja')" title="日本語">JA</button>
+  <button class="lang-btn" data-lang="ar" onclick="i18nSwitch('ar')" title="العربية">AR</button>
+</div>
+
+<div class="container">
+  <header class="header">
+    <div class="logo-area">
+      <img class="logo-img" src="web-images/logo.png" alt="Mini Elephant">
+    </div>
+    <h1>Mini Elephant Heavy Machinery</h1>
+    <p class="subtitle" data-i18n="site_subtitle">Product Parameter Catalog</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('excavator')"><span data-i18n="tab_excavator">⚡ Mini Excavator</span> <span class="count">9</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('mower')"><span data-i18n="tab_mower">🌿 Lawn Mower</span> <span class="count">9</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('loader')"><span data-i18n="tab_loader">🔧 Skid Steer Loader</span> <span class="count">5</span>
+    </button>
+  </div>
+
+  <!-- ========== EXCAVATORS ========== -->
+  <div class="products active" id="tab-excavator">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME06</span>
+        <h3 data-i18n="model_ME06">Mini Excavator ME06</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME06.jpg" alt="ME06" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Total_Weight">Total Weight</td><td>530 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>R210 / Gasoline / Air-cooled, 4.8 kW</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>2,200 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>1,200 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>1,130 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Radius">Max. Digging Radius</td><td>2,500 mm</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Compact_Flexible">Compact &amp; Flexible</span>
+        <span class="feature-tag" data-i18n="feat_Fuel_Efficient">Fuel-Efficient</span>
+        <span class="feature-tag" data-i18n="feat_Multi_Purpose">Multi-Purpose</span>
+        <span class="feature-tag" data-i18n="feat_Rubber_Track">Rubber Track</span>
+        <span class="feature-tag" data-i18n="feat_Easy_Operation">Easy Operation</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME08</span>
+        <h3 data-i18n="model_ME08">Mini Excavator ME08</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME08.jpg" alt="ME08" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Total_Weight">Total Weight</td><td>680 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runtong 420 / Gasoline / Air-cooled, 8.5 kW</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>2,350 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>1,600 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>1,300 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Radius">Max. Digging Radius</td><td>1,230 mm</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Greenhouse_Helper">Greenhouse Helper</span>
+        <span class="feature-tag" data-i18n="feat_Durable_Tracks">Durable Tracks</span>
+        <span class="feature-tag" data-i18n="feat_360_Rotation">360&deg; Rotation</span>
+        <span class="feature-tag" data-i18n="feat_Powerful">Powerful</span>
+        <span class="feature-tag" data-i18n="feat_Compact">Compact</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME09</span>
+        <h3 data-i18n="model_ME09">Mini Excavator ME09</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME09.jpg" alt="ME09" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Kepu 192F, 7.6 kW / 3000 rpm, Diesel</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>2,350 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>1,600 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>1,300 mm</td></tr>
+          <tr><td data-i18n="param_Features">Features</td><td>Rubber tracks, High-strength steel</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_High_Power_Engine">High-Power Engine</span>
+        <span class="feature-tag" data-i18n="feat_Hydraulic_System">Hydraulic System</span>
+        <span class="feature-tag" data-i18n="feat_Multiple_Engine">Multiple Engine Options</span>
+        <span class="feature-tag" data-i18n="feat_Orchards_Reclamation">Orchards &amp; Land Reclamation</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME12</span>
+        <h3 data-i18n="model_ME12">Mini Excavator ME12</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME12.jpg" alt="ME12" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>KOOP 192F, 7.6 kW / 3000 rpm, Diesel</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>2,580 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>1,745 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>1,700 mm</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Greenhouses_Orchards">Greenhouses &amp; Orchards</span>
+        <span class="feature-tag" data-i18n="feat_Multi_Angle">Multi-Angle Excavation</span>
+        <span class="feature-tag" data-i18n="feat_High_Mobility">High Mobility</span>
+        <span class="feature-tag" data-i18n="feat_Reliable_Performance">Reliable Performance</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME16</span>
+        <h3 data-i18n="model_ME16">Mini Excavator ME16</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME16.jpg" alt="ME16" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Total_Weight">Total Weight</td><td>980 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Kubota 722 Cab</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>2,580 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>1,745 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>1,700 mm</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Multiple_Attachments">Multiple Attachments</span>
+        <span class="feature-tag" data-i18n="feat_360_Steering">360&deg; Steering</span>
+        <span class="feature-tag" data-i18n="feat_Pilot_Hydraulics">Pilot Hydraulics</span>
+        <span class="feature-tag" data-i18n="feat_Multi_Site">Multi-Site Application</span>
+        <span class="feature-tag" data-i18n="feat_Durable">Durable</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME17</span>
+        <h3 data-i18n="model_ME17">Mini Excavator ME17</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME17.jpg" alt="ME17" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Total_Weight">Total Weight</td><td>1,372 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Laidong 385, 3-cylinder, 18.8 kW / 2200 rpm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>2,560 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>1,800 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>1,693 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Radius">Max. Digging Radius</td><td>3,060 mm</td></tr>
+          <tr><td data-i18n="param_Options">Options</td><td>Cab, Boom Swing, Retractable Chassis</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Optional_Cab">Optional Cab</span>
+        <span class="feature-tag" data-i18n="feat_Boom_Swing">Boom Swing</span>
+        <span class="feature-tag" data-i18n="feat_Retractable_Chassis">Retractable Chassis</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME18</span>
+        <h3 data-i18n="model_ME18">Mini Excavator ME18</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME18.jpg" alt="ME18" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>1,800 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Kubota D722, 4-stroke Diesel, 14.9 kW / 3600 rpm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>3,200 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>2,300 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>2,200 mm</td></tr>
+          <tr><td data-i18n="param_Options">Options</td><td>Cab, Boom Swing, Retractable Chassis</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Water_Cooled_Diesel">Water-Cooled Diesel</span>
+        <span class="feature-tag" data-i18n="feat_Kubota_Engine">Kubota Engine</span>
+        <span class="feature-tag" data-i18n="feat_Optional_Configs">Optional Configurations</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME20</span>
+        <h3 data-i18n="model_ME20">Mini Excavator ME20</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME20.jpg" alt="ME20" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>1,800 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Quanchai V13, 4-stroke Diesel, 14.9 kW / 3600 rpm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>3,200 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>2,300 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>2,200 mm</td></tr>
+          <tr><td data-i18n="param_Engine_Options">Engine Options</td><td>Kubota D902, Kubota D1105</td></tr>
+          <tr><td data-i18n="param_Options">Options</td><td>Cab, Boom Swing, Retractable Chassis</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">ME30</span>
+        <h3 data-i18n="model_ME30">Mini Excavator ME30</h3>
+      </div>
+      <img class="card-img" src="web-images/excavator_ME30.jpg" alt="ME30" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>2,500 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Kubota D1105, 4-stroke Diesel, 21.7 kW / 3600 rpm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Height">Max. Digging Height</td><td>3,200 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dumping_Height">Max. Dumping Height</td><td>2,700 mm</td></tr>
+          <tr><td data-i18n="param_Max_Digging_Depth">Max. Digging Depth</td><td>2,350 mm</td></tr>
+          <tr><td data-i18n="param_Engine_Options">Engine Options</td><td>Changchai 390, Laidong 385, Kubota D902</td></tr>
+          <tr><td data-i18n="param_Options">Options</td><td>Canopy, Retractable Chassis, High/Low Speed, Built-in Motor</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== LAWN MOWERS ========== -->
+  <div class="products" id="tab-mower">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">550D</span>
+        <h3 data-i18n="model_550D_cover">Lawn Mower 550D (With Outer Cover)</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_550D-cover.jpg" alt="550D Cover" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton 225</td></tr>
+          <tr><td data-i18n="param_Machine_Dimensions">Machine Dimensions</td><td>950 x 850 x 560 mm</td></tr>
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>130 kg</td></tr>
+          <tr><td data-i18n="param_Cutting_Width">Cutting Width</td><td>550 mm</td></tr>
+          <tr><td data-i18n="param_Stubble_Height">Stubble Height</td><td>20 - 60 mm</td></tr>
+          <tr><td data-i18n="param_Control_Mode">Control Mode</td><td>Remote Control</td></tr>
+          <tr><td data-i18n="param_Travel_Mode">Travel Mode</td><td>Electric Crawler Type</td></tr>
+          <tr><td data-i18n="param_Remote_Distance">Remote Distance</td><td>&ge; 200 m</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&ge; 40&deg;</td></tr>
+          <tr><td data-i18n="param_Motor_Power">Motor Power</td><td>DC Motor 800W x 2</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Remote_Control">Remote Control</span>
+        <span class="feature-tag" data-i18n="feat_Wear_Resistant_Tracks">Wear-Resistant Tracks</span>
+        <span class="feature-tag" data-i18n="feat_Wide_Cut">Wide Cut</span>
+        <span class="feature-tag" data-i18n="feat_Durable_Engine">Durable Engine</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">550D</span>
+        <h3 data-i18n="model_550D">Lawn Mower 550D</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_550D.jpg" alt="550D" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton 225</td></tr>
+          <tr><td data-i18n="param_Machine_Dimensions">Machine Dimensions</td><td>950 x 850 x 560 mm</td></tr>
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>130 kg</td></tr>
+          <tr><td data-i18n="param_Cutting_Width">Cutting Width</td><td>550 mm</td></tr>
+          <tr><td data-i18n="param_Stubble_Height">Stubble Height</td><td>20 - 60 mm</td></tr>
+          <tr><td data-i18n="param_Control_Mode">Control Mode</td><td>Remote Control</td></tr>
+          <tr><td data-i18n="param_Remote_Distance">Remote Distance</td><td>&ge; 200 m</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&ge; 40&deg;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>2 - 3 km/h</td></tr>
+          <tr><td data-i18n="param_Motor_Power">Motor Power</td><td>2 x 800W DC Motor</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Remote_Control">Remote Control</span>
+        <span class="feature-tag" data-i18n="feat_Wear_Resistant_Tracks">Wear-Resistant Tracks</span>
+        <span class="feature-tag" data-i18n="feat_Wide_Cut">Wide Cut</span>
+        <span class="feature-tag" data-i18n="feat_Durable_Engine">Durable Engine</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">800</span>
+        <h3 data-i18n="model_800">Lawn Mower 800</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_800.jpg" alt="800" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Kepu 195</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>1,570 x 1,000 x 1,000 mm</td></tr>
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>356 kg</td></tr>
+          <tr><td data-i18n="param_Cutting_Width">Cutting Width</td><td>800 mm</td></tr>
+          <tr><td data-i18n="param_Stubble_Height">Stubble Height</td><td>20 - 150 mm</td></tr>
+          <tr><td data-i18n="param_Main_Motor_Power">Main Motor Power</td><td>1,800 W</td></tr>
+          <tr><td data-i18n="param_Travel_Motor">Travel Motor</td><td>2 x 800W</td></tr>
+          <tr><td data-i18n="param_Remote_Control_Range">Remote Control Range</td><td>500 m</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&ge; 40&deg;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>0 - 3 km/h</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Efficient_Remote">Efficient Remote</span>
+        <span class="feature-tag" data-i18n="feat_Heavy_Duty_Tracks">Heavy-Duty Tracks</span>
+        <span class="feature-tag" data-i18n="feat_Smart_Hydraulic">Smart Hydraulic</span>
+        <span class="feature-tag" data-i18n="feat_Diesel_Hybrid">Diesel Hybrid</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">550E</span>
+        <h3 data-i18n="model_550E">Lawn Mower 550E (Electric)</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_550E.jpg" alt="550E" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>900 x 850 x 420 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>96 kg</td></tr>
+          <tr><td data-i18n="param_Stubble_Height">Stubble Height</td><td>20 - 70 mm</td></tr>
+          <tr><td data-i18n="param_Cutting_Width">Cutting Width</td><td>550 mm</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>0 - 3 km/h</td></tr>
+          <tr><td data-i18n="param_Remote_Control_Range">Remote Control Range</td><td>200 m</td></tr>
+          <tr><td data-i18n="param_Cutting_Motor_Power">Cutting Motor Power</td><td>2,000 W</td></tr>
+          <tr><td data-i18n="param_Battery">Battery</td><td>48V 40A</td></tr>
+          <tr><td data-i18n="param_Working_Hours">Working Hours</td><td>2 - 3 hours</td></tr>
+          <tr><td data-i18n="param_Charger">Charger</td><td>Input 220V / Output 54.75V 6A</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_All_Electric_Quiet">All-Electric Quiet</span>
+        <span class="feature-tag" data-i18n="feat_Eco_Friendly">Eco-Friendly</span>
+        <span class="feature-tag" data-i18n="feat_Compact_Flexible">Compact &amp; Flexible</span>
+        <span class="feature-tag" data-i18n="feat_Intelligent_Adjust">Intelligent Adjustment</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">550S</span>
+        <h3 data-i18n="model_550S">Lawn Mower 550S</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_550S.jpg" alt="550S" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Loncin / Replaceable</td></tr>
+          <tr><td data-i18n="param_Control_Mode">Control Mode</td><td>Remote Control</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>990 x 830 x 450 mm</td></tr>
+          <tr><td data-i18n="param_Travel_Mode">Travel Mode</td><td>Electric Wheel Type</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>95 kg</td></tr>
+          <tr><td data-i18n="param_Remote_Distance">Remote Distance</td><td>200 m</td></tr>
+          <tr><td data-i18n="param_Mowing_Width">Mowing Width</td><td>550 mm</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&le; 40&deg;</td></tr>
+          <tr><td data-i18n="param_Motor_Power">Motor Power</td><td>Brushless Motor</td></tr>
+          <tr><td data-i18n="param_Starting_Mode">Starting Mode</td><td>Electric + Manual Start</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Ultra_Low_Precision">Ultra-Low Precision</span>
+        <span class="feature-tag" data-i18n="feat_All_Terrain_Ready">All-Terrain Ready</span>
+        <span class="feature-tag" data-i18n="feat_Safe_Remote">Safe Remote</span>
+        <span class="feature-tag" data-i18n="feat_Modular_Maintenance">Modular Maintenance</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">800E</span>
+        <h3 data-i18n="model_800E">Lawn Mower 800E (Electric)</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_800E.jpg" alt="800E" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>1,300 x 1,250 x 680 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>220 kg</td></tr>
+          <tr><td data-i18n="param_Mowing_Width">Mowing Width</td><td>800 mm</td></tr>
+          <tr><td data-i18n="param_Cutting_Height">Cutting Height</td><td>10 - 150 mm (Adjustable)</td></tr>
+          <tr><td data-i18n="param_Remote_Control_Distance">Remote Control Distance</td><td>500 - 800 m</td></tr>
+          <tr><td data-i18n="param_Mowing_Motor_Power">Mowing Motor Power</td><td>4,000 W</td></tr>
+          <tr><td data-i18n="param_Battery">Battery</td><td>LiFePO4</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&le; 40&deg;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>Adjustable</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Smart_Remote">Smart Remote</span>
+        <span class="feature-tag" data-i18n="feat_Eco_Friendly">Eco-Friendly</span>
+        <span class="feature-tag" data-i18n="feat_Dual_Power">Dual Power</span>
+        <span class="feature-tag" data-i18n="feat_Wide_Cut_Fast">Wide Cut, Fast</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">900L</span>
+        <h3 data-i18n="model_900L">Lawn Mower 900L</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_900L.jpg" alt="900L" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Loncin / Replaceable</td></tr>
+          <tr><td data-i18n="param_Travel_Mode">Travel Mode</td><td>Electric Crawler Type</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>1,400 x 1,300 x 650 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>345 kg (with shell)</td></tr>
+          <tr><td data-i18n="param_Mowing_Width">Mowing Width</td><td>900 mm</td></tr>
+          <tr><td data-i18n="param_Cutting_Height">Cutting Height</td><td>20 - 200 mm</td></tr>
+          <tr><td data-i18n="param_Generator_Power">Generator Power</td><td>1,800 W</td></tr>
+          <tr><td data-i18n="param_Remote_Distance">Remote Distance</td><td>500 - 800 m</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&le; 45&deg;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>Multi-speed Adjustable</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Robust_Tracks">Robust Tracks</span>
+        <span class="feature-tag" data-i18n="feat_Long_Range_Control">Long-Range Control</span>
+        <span class="feature-tag" data-i18n="feat_High_Perf_Engine">High-Performance Engine</span>
+        <span class="feature-tag" data-i18n="feat_Dual_Blade_Wide_Cut">Dual-Blade Wide Cut</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">800D</span>
+        <h3 data-i18n="model_800D">Lawn Mower 800D</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_800D.jpg" alt="800D" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>260 kg</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton RV550, 16 HP, 550 cc</td></tr>
+          <tr><td data-i18n="param_Starting_Mode">Starting Mode</td><td>Electric Start</td></tr>
+          <tr><td data-i18n="param_Generator">Generator</td><td>24V / 1500W</td></tr>
+          <tr><td data-i18n="param_Motor">Motor</td><td>2 x 2 kW Brushless Motor</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>1,350 x 1,220 x 1,050 mm</td></tr>
+          <tr><td data-i18n="param_Water_Tank">Water Tank</td><td>80 L</td></tr>
+          <tr><td data-i18n="param_Mowing_Width">Mowing Width</td><td>800 mm</td></tr>
+          <tr><td data-i18n="param_Cutter_Height_Adjustment">Cutter Height Adjustment</td><td>0 - 15 cm</td></tr>
+          <tr><td data-i18n="param_Spraying">Spraying</td><td>Rotatable 4 Nozzles</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Ultra_Low_Clearance">Ultra-Low Clearance</span>
+        <span class="feature-tag" data-i18n="feat_All_Terrain">All-Terrain</span>
+        <span class="feature-tag" data-i18n="feat_Integrated_Mowing">Integrated Mowing &amp; Spraying</span>
+        <span class="feature-tag" data-i18n="feat_Modular_Maintenance">Modular Maintenance</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">1000D</span>
+        <h3 data-i18n="model_1000D">Lawn Mower 1000D</h3>
+      </div>
+      <img class="card-img" src="web-images/mower_1000D.jpg" alt="1000D" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Loncin</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>1,450 x 1,400 x 630 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>300 kg</td></tr>
+          <tr><td data-i18n="param_Mowing_Width">Mowing Width</td><td>1,000 mm</td></tr>
+          <tr><td data-i18n="param_Stubble_Height">Stubble Height</td><td>20 - 150 mm</td></tr>
+          <tr><td data-i18n="param_Starting_Mode">Starting Mode</td><td>Remote Control Start</td></tr>
+          <tr><td data-i18n="param_Motor_Power">Motor Power</td><td>1,800 W</td></tr>
+          <tr><td data-i18n="param_Travel_Mode">Travel Mode</td><td>Electric Crawler Type</td></tr>
+          <tr><td data-i18n="param_Remote_Control_Distance">Remote Control Distance</td><td>500 m</td></tr>
+          <tr><td data-i18n="param_Max_Climbing_Angle">Max Climbing Angle</td><td>&le; 40&deg;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>0 - 3 km/h</td></tr>
+          <tr><td data-i18n="param_Travel_Motor">Travel Motor</td><td>800W x 2</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Stable_Tracks">Stable Tracks</span>
+        <span class="feature-tag" data-i18n="feat_Long_Range_Control">Long-Range Control</span>
+        <span class="feature-tag" data-i18n="feat_Dual_Power_Peak">Dual Power, Peak Output</span>
+        <span class="feature-tag" data-i18n="feat_1m_Wide_Cut">1m Wide Cut</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========== LOADERS ========== -->
+  <div class="products" id="tab-loader">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">330</span>
+        <h3 data-i18n="model_330">Skid Steer Loader 330</h3>
+      </div>
+      <img class="card-img" src="web-images/loader_330.jpg" alt="330" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Bucket_Capacity">Bucket Capacity</td><td>0.12 m&sup3;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>0 - 6 km/h</td></tr>
+          <tr><td data-i18n="param_Gradeability">Gradeability</td><td>25%</td></tr>
+          <tr><td data-i18n="param_Max_Lifting_Force">Max Lifting Force</td><td>260 kg</td></tr>
+          <tr><td data-i18n="param_Max_Working_Height">Max Working Height</td><td>2,446 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dump_Height">Max Dump Height</td><td>2,100 mm</td></tr>
+          <tr><td data-i18n="param_Bucket_Dump_Angle">Bucket Dump Angle</td><td>40&deg;</td></tr>
+          <tr><td data-i18n="param_Bucket_Width">Bucket Width</td><td>1,016 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>2,400 x 1,025 x 1,542 mm</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton 740, 23 hp, 16.8 kW, 739.3 cc, 2-cyl</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Compact_Flexible">Compact &amp; Flexible</span>
+        <span class="feature-tag" data-i18n="feat_Versatile_Multi">Versatile Multi-function</span>
+        <span class="feature-tag" data-i18n="feat_Great_Adaptability">Great Adaptability</span>
+        <span class="feature-tag" data-i18n="feat_Easy_Operation">Easy Operation</span>
+        <span class="feature-tag" data-i18n="feat_Low_Maintenance">Low Maintenance</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">380</span>
+        <h3 data-i18n="model_380">Skid Steer Loader 380</h3>
+      </div>
+      <img class="card-img" src="web-images/loader_380.jpg" alt="380" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton R740, 24 HP, 16.8 kW, 739 cc</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>2,285 x 1,100 x 1,270 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>890 kg</td></tr>
+          <tr><td data-i18n="param_Rated_Load">Rated Load</td><td>200 kg</td></tr>
+          <tr><td data-i18n="param_Max_Load">Maximum Load</td><td>375 kg</td></tr>
+          <tr><td data-i18n="param_Max_Unloading_Height">Max Unloading Height</td><td>1,880 mm</td></tr>
+          <tr><td data-i18n="param_Bucket_Capacity">Bucket Capacity</td><td>0.15 m&sup3;</td></tr>
+          <tr><td data-i18n="param_Hydraulic_Pressure">Hydraulic Pressure</td><td>17 MPa</td></tr>
+          <tr><td data-i18n="param_Climbing_Ability">Climbing Ability</td><td>30&deg;</td></tr>
+          <tr><td data-i18n="param_Walking_Speed">Walking Speed</td><td>0 - 6 km/h</td></tr>
+          <tr><td data-i18n="param_Fuel_Capacity">Fuel Capacity</td><td>25 L</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_4Stroke_AirCooled">4-Stroke Air-Cooled</span>
+        <span class="feature-tag" data-i18n="feat_Gasoline_Power">Gasoline Power</span>
+        <span class="feature-tag" data-i18n="feat_High_Hydraulic">High Hydraulic Pressure</span>
+        <span class="feature-tag" data-i18n="feat_Compact_Design">Compact Design</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">35</span>
+        <h3 data-i18n="model_35">Skid Steer Loader 35</h3>
+      </div>
+      <img class="card-img" src="web-images/loader_35.jpg" alt="35" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton 825D, 32.6 HP, 24 kW, 999 cc</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>2,660 x 910 x 1,810 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Weight">Overall Weight</td><td>1,450 kg</td></tr>
+          <tr><td data-i18n="param_Rated_Load">Rated Load</td><td>200 kg</td></tr>
+          <tr><td data-i18n="param_Max_Unloading_Height">Max Unloading Height</td><td>1,959 mm</td></tr>
+          <tr><td data-i18n="param_Bucket_Capacity">Bucket Capacity</td><td>0.18 m&sup3;</td></tr>
+          <tr><td data-i18n="param_Bucket_Width">Bucket Width</td><td>900 mm</td></tr>
+          <tr><td data-i18n="param_Working_Radius">Working Radius</td><td>2,820 mm</td></tr>
+          <tr><td data-i18n="param_Walking_Speed">Walking Speed</td><td>0 - 6 km/h</td></tr>
+          <tr><td data-i18n="param_Fuel_Capacity">Fuel Capacity</td><td>25 L</td></tr>
+          <tr><td data-i18n="param_Options">Options</td><td>Optional Laidong / Kubota engine</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_High_Power_Fuel">High Power, Low Fuel</span>
+        <span class="feature-tag" data-i18n="feat_Stable_Rough_Terrain">Stable on Rough Terrain</span>
+        <span class="feature-tag" data-i18n="feat_Anti_Slip_Tracks">Anti-Slip Tracks</span>
+        <span class="feature-tag" data-i18n="feat_Explosion_Proof">Explosion-Proof Hydraulics</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">290</span>
+        <h3 data-i18n="model_290">Skid Steer Loader 290</h3>
+      </div>
+      <img class="card-img" src="web-images/loader_290.jpg" alt="290" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>933 kg</td></tr>
+          <tr><td data-i18n="param_Bucket_Capacity">Bucket Capacity</td><td>0.15 m&sup3;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>0 - 6 km/h</td></tr>
+          <tr><td data-i18n="param_Gradeability">Gradeability</td><td>25%</td></tr>
+          <tr><td data-i18n="param_Max_Lifting_Force">Max Lifting Force</td><td>200 kg</td></tr>
+          <tr><td data-i18n="param_Max_Working_Height">Max Working Height</td><td>2,200 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dump_Height">Max Dump Height</td><td>1,680 mm</td></tr>
+          <tr><td data-i18n="param_Bucket_Dump_Angle">Bucket Dump Angle</td><td>33&deg;</td></tr>
+          <tr><td data-i18n="param_Bucket_Width">Bucket Width</td><td>1,100 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>2,290 x 1,110 x 2,150 mm</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Runton 420</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Diversified_Power">Diversified Compliant Power</span>
+        <span class="feature-tag" data-i18n="feat_High_Perf_Hydraulics">High-Performance Hydraulics</span>
+        <span class="feature-tag" data-i18n="feat_Multi_Function_Hitch">Multi-Functional Quick Hitch</span>
+        <span class="feature-tag" data-i18n="feat_Easy_Operation">Easy Operation</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="model-tag">1200</span>
+        <h3 data-i18n="model_1200">Skid Steer Loader 1200</h3>
+      </div>
+      <img class="card-img" src="web-images/loader_1200.jpg" alt="1200" loading="lazy">
+      <div class="card-body">
+        <table class="spec-table">
+          <tr><td data-i18n="param_Operating_Weight">Operating Weight</td><td>1,220 kg</td></tr>
+          <tr><td data-i18n="param_Bucket_Capacity">Bucket Capacity</td><td>0.12 m&sup3;</td></tr>
+          <tr><td data-i18n="param_Travel_Speed">Travel Speed</td><td>0 - 6 km/h</td></tr>
+          <tr><td data-i18n="param_Gradeability">Gradeability</td><td>25%</td></tr>
+          <tr><td data-i18n="param_Max_Lifting_Force">Max Lifting Force</td><td>260 kg</td></tr>
+          <tr><td data-i18n="param_Max_Working_Height">Max Working Height</td><td>2,446 mm</td></tr>
+          <tr><td data-i18n="param_Max_Dump_Height">Max Dump Height</td><td>2,100 mm</td></tr>
+          <tr><td data-i18n="param_Bucket_Dump_Angle">Bucket Dump Angle</td><td>40&deg;</td></tr>
+          <tr><td data-i18n="param_Bucket_Width">Bucket Width</td><td>1,016 mm</td></tr>
+          <tr><td data-i18n="param_Overall_Dimensions">Overall Dimensions</td><td>2,400 x 1,025 x 1,542 mm</td></tr>
+          <tr><td data-i18n="param_Engine">Engine</td><td>Yanmar 374</td></tr>
+        </table>
+      </div>
+      <div class="features">
+        <span class="feature-tag" data-i18n="feat_Various_Power">Various Power Options</span>
+        <span class="feature-tag" data-i18n="feat_Global_Compliance">Global Compliance</span>
+        <span class="feature-tag" data-i18n="feat_Powerful_Hydraulics">Powerful Hydraulics</span>
+        <span class="feature-tag" data-i18n="feat_Quick_Attach">Quick Attach &amp; Multi-Purpose</span>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <a href="https://www.elephantmini.com" target="_blank">www.elephantmini.com</a>
+    <p><span data-i18n="footer_text">Mini Elephant Heavy Machinery &mdash; Product Parameter Catalog</span></p>
+  </footer>
+</div>
+
+<script>
+// Particle Background
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animationFrame;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() {
+    this.reset();
+    this.y = Math.random() * canvas.height;
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = -5;
+    this.size = Math.random() * 1.5 + 0.5;
+    this.speed = Math.random() * 0.4 + 0.1;
+    this.opacity = Math.random() * 0.5 + 0.1;
+    this.drift = (Math.random() - 0.5) * 0.3;
+  }
+  update() {
+    this.y += this.speed;
+    this.x += this.drift;
+    if (this.y > canvas.height + 5) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(212,168,83,${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) {
+  particles.push(new Particle());
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  animationFrame = requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// Tab switching with animation reset
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.products').forEach(p => p.classList.remove('active'));
+
+  const targetTab = document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`);
+  if (targetTab) targetTab.classList.add('active');
+
+  const targetPanel = document.getElementById(`tab-${tab}`);
+  if (targetPanel) {
+    targetPanel.classList.add('active');
+    // Re-trigger card animations
+    targetPanel.querySelectorAll('.card').forEach((card, i) => {
+      card.style.animation = 'none';
+      card.offsetHeight;
+      card.style.animation = '';
+      card.style.animationDelay = `${i * 0.05}s`;
+    });
+  }
+}
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>
